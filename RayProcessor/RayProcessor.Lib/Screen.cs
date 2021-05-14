@@ -11,10 +11,18 @@ namespace RayProcesssor.Lib
         // colors of each pixel
         // (0, 0) - bottom left
         char[,] pixels;
+        private (int x, int y) pixelSize;
 
-        public Screen(int width, int height)
+        // a normal to the screen, facing the direction we are looking at
+        private Point normal;
+        private Point screenCenter;
+
+        public Screen(int width, int height, (int x, int y) pixelSize, Point normal, Point screenCenter)
         {
             pixels = new char[width, height];
+            this.pixelSize = pixelSize;
+            this.normal = normal;
+            this.screenCenter = screenCenter;
         }
 
         public void SetPixel(char color, int x, int y)
