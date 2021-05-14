@@ -12,5 +12,11 @@ namespace RayProcesssor.ConsoleApp
 
         // camera point
         private Point point;
+
+        public Ray(Point vector, Point point)
+        {
+            this.vector = vector;
+            this.point = point;
+        }
     }
 }
