@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace RayProcesssor.Lib
 {
-    struct Point
+    public struct Point
     {
         public double x;
         public double y;
         public double z;
 
-        public Point(int x, int y, int z)
+        public Point(double x, double y, double z)
         {
             this.x = x;
             this.y = y;

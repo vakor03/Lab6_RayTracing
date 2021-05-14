@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace RayProcesssor.Lib
 {
-    class Ray
+    public class Ray
     {
-        private Point vector;
+        public Point Vector { get; }
 
         // camera point
-        private Point point;
+        public Point StartPoint { get; }
 
         public Ray(Point vector, Point point)
         {
-            this.vector = vector;
-            this.point = point;
+            Vector = vector;
+            StartPoint = point;
         }
     }
 }
