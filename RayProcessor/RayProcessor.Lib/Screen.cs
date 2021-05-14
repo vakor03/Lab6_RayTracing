@@ -43,5 +43,17 @@ namespace RayProcessor.Lib
                 screenCenter.y + pixelX * directionalSinuses.y * pixelSize.width,
                 screenCenter.z + pixelY * directionalSinuses.z * pixelSize.height);
         }
+
+        public void OutputToConsole()
+        {
+            for (int i = screenPixelSize.height - 1; i >= 0; i--)
+            {
+                for (int j = screenPixelSize.width - 1; j >= 0; j--)
+                {
+                    Console.Write(pixels[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
     }
 }
