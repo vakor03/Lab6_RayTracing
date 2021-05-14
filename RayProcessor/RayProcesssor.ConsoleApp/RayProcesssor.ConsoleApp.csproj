@@ -6,4 +6,8 @@
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\RayProcessor.Lib\RayProcessor.Lib.csproj" />
+    </ItemGroup>
+
 </Project>
