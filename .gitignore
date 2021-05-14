@@ -32,3 +32,8 @@ _UpgradeReport_Files/
 Thumbs.db
 Desktop.ini
 .DS_Store
+RayProcessor/.idea/.idea.RayProcessor/.idea/
+
+RayProcessor/RayProcesssor.ConsoleApp/.dockerignore
+
+RayProcessor/RayProcesssor.ConsoleApp/Dockerfile

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayProcesssor.ConsoleApp", "RayProcesssor.ConsoleApp\RayProcesssor.ConsoleApp.csproj", "{0319BCDE-C8FC-48FE-A4AF-3117BE8A9687}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayProcessor.Lib", "RayProcessor.Lib\RayProcessor.Lib.csproj", "{AFFB81E0-CF0E-464F-9B15-5F0F6B41684F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayProcessor.Lib.Tests", "RayProcessor.Lib.Tests\RayProcessor.Lib.Tests.csproj", "{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0319BCDE-C8FC-48FE-A4AF-3117BE8A9687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0319BCDE-C8FC-48FE-A4AF-3117BE8A9687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0319BCDE-C8FC-48FE-A4AF-3117BE8A9687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0319BCDE-C8FC-48FE-A4AF-3117BE8A9687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFFB81E0-CF0E-464F-9B15-5F0F6B41684F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFFB81E0-CF0E-464F-9B15-5F0F6B41684F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFFB81E0-CF0E-464F-9B15-5F0F6B41684F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFFB81E0-CF0E-464F-9B15-5F0F6B41684F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
