@@ -1,5 +1,4 @@
 ﻿using System;
-using RayProcesssor.Lib;
 
 namespace RayProcessor.Lib
 {
