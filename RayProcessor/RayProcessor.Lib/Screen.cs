@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RayProcesssor.Lib
 {
-    class Screen
+    public class Screen
     {
         // colors of each pixel
         // (0, 0) - bottom left
@@ -18,6 +18,7 @@ namespace RayProcesssor.Lib
         private Point normal;
         private Point screenCenter;
 
+        // width and height is the number of pixels
         public Screen(int width, int height, (int width, int height) pixelSize, Point normal, Point screenCenter)
         {
             pixels = new char[width, height];
@@ -37,10 +38,10 @@ namespace RayProcesssor.Lib
             Point directionalSinuses = normal.GetDirectionalSinuses();
 
             pixelX -= screenPixelSize.width / 2;
-            pixelY -= screenPixelSize.width / 2;
-            return new Point(screenCenter.x + pixelX * directionalSinuses.x * screenPixelSize.width,
-                screenCenter.y + pixelX * directionalSinuses.y * screenPixelSize.width,
-                screenCenter.y + pixelY * directionalSinuses.z * screenPixelSize.height);
+            pixelY -= screenPixelSize.height / 2;
+            return new Point(screenCenter.x + pixelX * directionalSinuses.x * pixelSize.width,
+                screenCenter.y + pixelX * directionalSinuses.y * pixelSize.width,
+                screenCenter.z + pixelY * directionalSinuses.z * pixelSize.height);
         }
     }
 }

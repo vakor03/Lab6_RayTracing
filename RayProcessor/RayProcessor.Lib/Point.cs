@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RayProcesssor.Lib
 {
-    struct Point
+    public struct Point
     {
         public double x;
         public double y;
@@ -31,10 +31,15 @@ namespace RayProcesssor.Lib
 
         public Point GetDirectionalSinuses()
         {
-            Point directionalCosinuses = GetDirectionalSinuses();
+            Point directionalCosinuses = GetDirectionalСosinuses();
             return new Point(Math.Sqrt(1-Math.Pow(directionalCosinuses.x, 2)),
                 Math.Sqrt(1 - Math.Pow(directionalCosinuses.y, 2)),
                 Math.Sqrt(1 - Math.Pow(directionalCosinuses.z, 2)));
+        }
+
+        public override string ToString()
+        {
+            return $"({x}, {y}, {z})";
         }
     }
 }
