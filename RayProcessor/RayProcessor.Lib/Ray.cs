@@ -16,12 +16,12 @@ namespace RayProcesssor.Lib
         public Ray(Point vector, Point origin)
         {
             Vector = vector;
-            StartPoint = point;
+            StartPoint = origin;
         }
 
         public override string ToString()
         {
-            return $"Ray(vector: {vector}, origin {origin})";
+            return $"Ray(vector: {Vector}, origin {StartPoint})";
         }
 
     }
