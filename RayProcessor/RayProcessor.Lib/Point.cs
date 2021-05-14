@@ -8,9 +8,9 @@ namespace RayProcesssor.Lib
 {
     struct Point
     {
-        double x;
-        double y;
-        double z;
+        public double x;
+        public double y;
+        public double z;
 
         double magnitude;
 
