@@ -13,10 +13,10 @@ namespace RayProcesssor.Lib
         // camera point
         private Point point;
 
-        public Ray(Point vector, Point point)
+        public Ray(Point point1, Point point2)
         {
-            this.vector = vector;
-            this.point = point;
+            vector = new(point2.x - point1.x, point2.y - point1.y, point2.z - point1.z);
+            point = point1;
         }
     }
 }
