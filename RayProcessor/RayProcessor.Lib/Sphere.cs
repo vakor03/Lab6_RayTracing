@@ -16,10 +16,10 @@ namespace RayProcessor.Lib
         public bool RayCrossesSphere(Ray ray)
         {
             Point s = new Point(center.x - ray.StartPoint.x, center.y - ray.StartPoint.y, center.y - ray.StartPoint.y);
-            double b = 2.0 * ScalarProduct(s, ray.Vector);
-            double c = ScalarProduct(ray.Vector, ray.Vector) - (radius * radius);
+            double b = ScalarProduct(s, ray.Vector);
+            double c = ScalarProduct(s, s) - (radius * radius);
             
-            double discriminant = b * b - 4 * c;
+            double discriminant = 4*(b*b - ScalarProduct(ray.Vector, ray.Vector)*c);
             
             if(discriminant < 0.0f)
                 return false;
