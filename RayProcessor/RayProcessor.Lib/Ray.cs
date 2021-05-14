@@ -13,10 +13,16 @@ namespace RayProcesssor.Lib
         // camera point
         public Point StartPoint { get; }
 
-        public Ray(Point vector, Point point)
+        public Ray(Point vector, Point origin)
         {
             Vector = vector;
             StartPoint = point;
         }
+
+        public override string ToString()
+        {
+            return $"Ray(vector: {vector}, origin {origin})";
+        }
+
     }
 }
