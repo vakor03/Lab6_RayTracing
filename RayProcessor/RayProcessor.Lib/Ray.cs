@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayProcesssor.Lib
+namespace RayProcessor.Lib
 {
-    class Ray
+    public class Ray
     {
-        private Point vector;
+        public Point Vector { get; }
 
         // camera point
-        private Point origin;
+        public Point StartPoint { get; }
 
         public Ray(Point vector, Point origin)
         {
-            this.vector = vector;
-            this.origin = origin;
+            Vector = vector;
+            StartPoint = origin;
         }
 
         public override string ToString()
         {
-            return $"Ray(vector: {vector}, origin {origin})";
+            return $"Ray(vector: {Vector}, origin {StartPoint})";
         }
 
     }

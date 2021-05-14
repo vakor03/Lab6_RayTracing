@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayProcesssor.Lib
+namespace RayProcessor.Lib
 {
     public struct Point
     {
