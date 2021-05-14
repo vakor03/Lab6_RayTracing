@@ -11,12 +11,18 @@ namespace RayProcesssor.Lib
         private Point vector;
 
         // camera point
-        private Point point;
+        private Point origin;
 
-        public Ray(Point point1, Point point2)
+        public Ray(Point vector, Point origin)
         {
-            vector = new(point2.x - point1.x, point2.y - point1.y, point2.z - point1.z);
-            point = point1;
+            this.vector = vector;
+            this.origin = origin;
         }
+
+        public override string ToString()
+        {
+            return $"Ray(vector: {vector}, origin {origin})";
+        }
+
     }
 }
