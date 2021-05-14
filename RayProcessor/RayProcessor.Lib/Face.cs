@@ -1,7 +1,4 @@
 ﻿
-
-using RayProcesssor.Lib;
-
 namespace RayProcessor.Lib
 {
     public class Face
