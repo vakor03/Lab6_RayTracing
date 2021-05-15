@@ -19,13 +19,14 @@ namespace RayProcessor.Lib
 
         public (bool intersects, Point pointOfIntersection) IsCrossesTriangle(Ray ray)
         {
+            double epsilon = 0.00000001;
             Point e1 = vertex1 - vertex2;
             Point e2 = vertex1 - vertex3;
 
             Normal = CrossProduct(e1, e2);
             
             double tmp = DotProduct(Normal, ray.Vector); // хз як це назвати???
-            if (Math.Abs(tmp) < 0.000001) // промінь паралельний до трикутника
+            if (Math.Abs(tmp) < epsilon) // промінь паралельний до трикутника
             {
                 // if the first value is false, the point doesn't matter
                 return (false, new(0, 0, 0));
@@ -48,14 +49,14 @@ namespace RayProcessor.Lib
             double v = CrossProduct(pointOfInters-vertex1, e2).magnitude;
             v /= Normal.magnitude;
             
-            if (v < 0 || v > 1|| u+v>1)
+            if (v < 0 || v > 1 || u+v>1)
             {
                 return (false, new(0, 0, 0));
             }
             
             double t1 = CrossProduct(pointOfInters-vertex3, vertex3-vertex2).magnitude;
             t1 /= Normal.magnitude;
-            if (t1 < 0 || t1 > 1|| u+v+t1>1)
+            if (t1 < 0 || t1 > 1 || u+v+t1-epsilon>1)
             {
                 return (false, new(0, 0, 0));
             }
