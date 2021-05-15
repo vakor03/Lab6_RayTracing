@@ -12,10 +12,10 @@ namespace RayProcessor.Lib
         {
         }
 
-        public List<Face> ReadObj(string path)
+        public List<Triangle> ReadObj(string path)
         {
             List<Point> verts = new List<Point>();
-            List<Face> faces = new List<Face>();
+            List<Triangle> faces = new List<Triangle>();
             using StreamReader streamReader = new StreamReader(path);
             string inputStr;
             while ((inputStr = streamReader.ReadLine()) != null)
@@ -42,7 +42,7 @@ namespace RayProcessor.Lib
                         idArray[i - 1] = id-1;
                     }
 
-                    faces.Add(new Face(new[] {verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]}));
+                    faces.Add(new Triangle(verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]));
                 }
             }
 

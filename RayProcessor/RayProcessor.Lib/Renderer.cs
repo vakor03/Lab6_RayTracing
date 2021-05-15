@@ -69,6 +69,7 @@ namespace RayProcessor.Lib
             // fire ray from each pixel
             for (int i = 0; i < screen.screenPixelSize.height; i++)
             {
+                Console.WriteLine($"{(double)i / screen.screenPixelSize.height * 100} %");
                 for (int j = 0; j < screen.screenPixelSize.width; j++)
                 {
                     HitInfo info = FireRay(j, i, triangles);
