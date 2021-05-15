@@ -38,7 +38,7 @@ namespace RayProcessor.Lib
         
         public Screen(int width, int height, double pixelSize, Point camera, Point cameraVector)
         {
-            pixels = new double[width, height];
+            pixels = new double[height, width];
             this.screenPixelSize = (width, height);
             this.pixelSize = pixelSize;
             this.normal = cameraVector;
