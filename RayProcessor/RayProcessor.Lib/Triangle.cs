@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 
 namespace RayProcessor.Lib
@@ -25,7 +25,7 @@ namespace RayProcessor.Lib
             Normal = CrossProduct(e1, e2);
             
             double tmp = DotProduct(Normal, ray.Vector); // хз як це назвати???
-            if (tmp < 0.000001) // промінь паралельний до трикутника
+            if (Math.Abs(tmp) < 0.000001) // промінь паралельний до трикутника
             {
                 // if the first value is false, the point doesn't matter
                 return (false, new(0, 0, 0));
@@ -35,8 +35,8 @@ namespace RayProcessor.Lib
             double t = -DotProduct(vectorTmp, Normal)/tmp; //відстань від початку промення до точки перетину 
             Point pointOfInters = new Point(ray.StartPoint.x + ray.Vector.x * t,ray.StartPoint.y + ray.Vector.y * t,
                 ray.StartPoint.z + ray.Vector.z * t); // точка перетину
-
-            // u i v це барицентричні координати
+            
+            // u, v i t1 це барицентричні координати
             double u = VectorLenght(CrossProduct(pointOfInters-vertex1, e1));
             u /= VectorLenght(Normal);
 
@@ -49,6 +49,13 @@ namespace RayProcessor.Lib
             v /= VectorLenght(Normal);
             
             if (v < 0 || v > 1|| u+v>1)
+            {
+                return (false, new(0, 0, 0));
+            }
+            
+            double t1 = VectorLenght(CrossProduct(pointOfInters-vertex3, vertex3-vertex2));
+            t1 /= VectorLenght(Normal);
+            if (t1 < 0 || t1 > 1|| u+v+t1>1)
             {
                 return (false, new(0, 0, 0));
             }
