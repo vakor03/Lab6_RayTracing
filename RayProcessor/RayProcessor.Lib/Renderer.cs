@@ -8,7 +8,6 @@ namespace RayProcessor.Lib
 {
     public class Renderer
     {
-
         private Point camera;
         private Screen screen;
 
@@ -48,7 +47,7 @@ namespace RayProcessor.Lib
 
         private char GetPixelByHitInfo(HitInfo info)
         {
-            return info.hit ? 'X' : ' ';
+            return info.hit ? '1' : '0';
         }
 
         public void Render(List<Triangle> triangles)

@@ -11,7 +11,7 @@ namespace RayProcessor.Lib
     {
         // colors of each pixel
         // (0, 0) - bottom left
-        char[,] pixels;
+        public char[,] pixels { get; private set; }
         private double pixelSize;
         public (int width, int height) screenPixelSize;
 
