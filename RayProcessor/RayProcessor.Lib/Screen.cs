@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RayProcessor.Lib
 {
+    // CURRENTLY WORKS ONLY ALIGNED WITH Z AXIS (i guess)
     public class Screen
     {
         // colors of each pixel
@@ -34,13 +35,7 @@ namespace RayProcessor.Lib
         // screen is perpendicular to this vector
         // so, basically, it sets the direction the camera is facing and the distance
         // of the screen to the camera
-
-        // (width, height) and pixelSize don't depend on each other
-        // if (width, height) stays the same and pixelSize increases
-        // then we divide our screen into more rectangles
-        // if pixelSize stays the same and (width, height) increases
-        // (provided that cameraVector stays the same)
-        // we will see a bigger portion of the picture, but in a worse resolution
+        
         public Screen(int width, int height, double pixelSize, Point camera, Point cameraVector)
         {
             pixels = new char[width, height];
@@ -73,7 +68,12 @@ namespace RayProcessor.Lib
             {
                 for (int j = screenPixelSize.width - 1; j >= 0; j--)
                 {
+                    if (i == screenPixelSize.height / 2 || j == screenPixelSize.width / 2)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    }
                     Console.Write(pixels[i, j]);
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 Console.WriteLine();
             }
