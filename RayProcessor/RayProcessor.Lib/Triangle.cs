@@ -17,7 +17,7 @@ namespace RayProcessor.Lib
             vertex3 = v3;
         }
 
-        public bool IsCrossesTriangle(Ray ray)
+        public (bool intersects, Point pointOfIntersection) IsCrossesTriangle(Ray ray)
         {
             Point e1 = vertex1 - vertex2;
             Point e2 = vertex1 - vertex3;
@@ -27,7 +27,8 @@ namespace RayProcessor.Lib
             double tmp = DotProduct(Normal, ray.Vector); // хз як це назвати???
             if (tmp < 0.000001) // промінь паралельний до трикутника
             {
-                return false;
+                // if the first value is false, the point doesn't matter
+                return (false, new(0, 0, 0));
             }
 
             Point vectorTmp = ray.StartPoint - vertex1 ;
@@ -41,7 +42,7 @@ namespace RayProcessor.Lib
 
             if (u < 0 || u > 1)
             {
-                return false;
+                return (false, new(0, 0, 0));
             }
             
             double v = VectorLenght(CrossProduct(pointOfInters-vertex1, e2));
@@ -49,10 +50,10 @@ namespace RayProcessor.Lib
             
             if (v < 0 || v > 1|| u+v>1)
             {
-                return false;
+                return (false, new(0, 0, 0));
             }
             
-            return true;
+            return (true, pointOfInters);
         }
 
         private Point CrossProduct(Point vector1, Point vector2) //векторний добуток
