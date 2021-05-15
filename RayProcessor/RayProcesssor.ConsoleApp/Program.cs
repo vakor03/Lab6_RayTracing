@@ -14,12 +14,12 @@ namespace RayProcesssor.ConsoleApp
             Ray ray = new(new(-1, 0, -.1), new(1, 0, 0));
 
             Point camera = new(5, 0, 0);
-            Screen screen = new(50, 50, .5, camera, new(-1, 0, 0));
+            Screen screen = new(5000, 5000, .002, camera, new(-1, 0, 0));
 
             Renderer renderer = new(camera, screen);
             renderer.Render(new() { testTriangle , testTriangle1});
 
-            screen.OutputToConsole();
+            //screen.OutputToConsole();
 
             FileManager manager = new();
             manager.WriteBMP("output.bmp", screen);
