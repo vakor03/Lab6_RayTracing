@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 
 namespace RayProcessor.Lib
@@ -25,7 +25,7 @@ namespace RayProcessor.Lib
             Normal = CrossProduct(e1, e2);
             
             double tmp = DotProduct(Normal, ray.Vector); // хз як це назвати???
-            if (tmp < 0.000001) // промінь паралельний до трикутника
+            if (Math.Abs(tmp) < 0.000001) // промінь паралельний до трикутника
             {
                 // if the first value is false, the point doesn't matter
                 return (false, new(0, 0, 0));
