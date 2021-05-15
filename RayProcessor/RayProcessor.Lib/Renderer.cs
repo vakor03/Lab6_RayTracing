@@ -45,9 +45,9 @@ namespace RayProcessor.Lib
         }
 
 
-        private char GetPixelByHitInfo(HitInfo info)
+        private double GetPixelByHitInfo(HitInfo info)
         {
-            return info.hit ? '1' : '0';
+            return info.hit ? 1 : 0;
         }
 
         public void Render(List<Triangle> triangles)

@@ -18,8 +18,11 @@ namespace RayProcesssor.ConsoleApp
 
             Renderer renderer = new(camera, screen);
             renderer.Render(new() { testTriangle , testTriangle1});
+
             screen.OutputToConsole();
 
+            FileManager manager = new();
+            manager.WriteBMP("output.bmp", screen);
             
         }
     }
