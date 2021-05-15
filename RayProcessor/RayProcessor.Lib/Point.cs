@@ -3,11 +3,10 @@ namespace RayProcessor.Lib
 {
     public struct Point
     {
-        public double x;
-        public double y;
-        public double z;
-
-        double magnitude;
+        public readonly double x;
+        public readonly double y;
+        public readonly double z;
+        public readonly double magnitude;
 
         public Point(double x, double y, double z)
         {

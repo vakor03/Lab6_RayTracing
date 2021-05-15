@@ -37,24 +37,24 @@ namespace RayProcessor.Lib
                 ray.StartPoint.z + ray.Vector.z * t); // точка перетину
             
             // u, v i t1 це барицентричні координати
-            double u = VectorLenght(CrossProduct(pointOfInters-vertex1, e1));
-            u /= VectorLenght(Normal);
+            double u = CrossProduct(pointOfInters-vertex1, e1).magnitude;
+            u /= Normal.magnitude;
 
             if (u < 0 || u > 1)
             {
                 return (false, new(0, 0, 0));
             }
             
-            double v = VectorLenght(CrossProduct(pointOfInters-vertex1, e2));
-            v /= VectorLenght(Normal);
+            double v = CrossProduct(pointOfInters-vertex1, e2).magnitude;
+            v /= Normal.magnitude;
             
             if (v < 0 || v > 1|| u+v>1)
             {
                 return (false, new(0, 0, 0));
             }
             
-            double t1 = VectorLenght(CrossProduct(pointOfInters-vertex3, vertex3-vertex2));
-            t1 /= VectorLenght(Normal);
+            double t1 = CrossProduct(pointOfInters-vertex3, vertex3-vertex2).magnitude;
+            t1 /= Normal.magnitude;
             if (t1 < 0 || t1 > 1|| u+v+t1>1)
             {
                 return (false, new(0, 0, 0));
@@ -74,11 +74,6 @@ namespace RayProcessor.Lib
         private double DotProduct(Point vector1, Point vector2) //скалярний добуток
         {
             return vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z;
-        }
-
-        private double VectorLenght(Point vector)
-        {
-            return Math.Sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
         }
     }
 }
