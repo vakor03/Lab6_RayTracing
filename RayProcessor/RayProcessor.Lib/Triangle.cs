@@ -49,14 +49,14 @@ namespace RayProcessor.Lib
             double v = CrossProduct(pointOfInters-vertex1, e2).magnitude;
             v /= Normal.magnitude;
             
-            if (v < 0 || v > 1 || u+v>1)
+            if (v < 0 || v > 1 || u+v-epsilon>1)
             {
                 return (false, new(0, 0, 0));
             }
             
             double t1 = CrossProduct(pointOfInters-vertex3, vertex3-vertex2).magnitude;
             t1 /= Normal.magnitude;
-            if (t1 < 0 || t1 > 1 || u+v+t1-epsilon>1)
+            if (t1 < 0 || t1 > 1 || Math.Abs(u+v+t1-1)>epsilon)
             {
                 return (false, new(0, 0, 0));
             }
