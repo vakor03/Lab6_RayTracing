@@ -14,7 +14,7 @@ namespace RayProcessor.Lib
         {
             vertex1 = v1;
             vertex2 = v2;
-            vertex2 = v3;
+            vertex3 = v3;
         }
 
         public bool IsCrossesTriangle(Ray ray)
@@ -23,18 +23,20 @@ namespace RayProcessor.Lib
             Point e2 = vertex1 - vertex3;
 
             Normal = CrossProduct(e1, e2);
-
+            
             double tmp = DotProduct(Normal, ray.Vector); // хз як це назвати???
             if (tmp < 0.000001) // промінь паралельний до трикутника
             {
                 return false;
             }
 
-            Point vectorTmp = ray.StartPoint - vertex1;
-            double t = -DotProduct(vectorTmp, Normal); //відстань від початку промення до точки перетину 
-            
+            Point vectorTmp = ray.StartPoint - vertex1 ;
+            double t = -DotProduct(vectorTmp, Normal)/tmp; //відстань від початку промення до точки перетину 
+            Point pointOfInters = new Point(ray.StartPoint.x + ray.Vector.x * t,ray.StartPoint.y + ray.Vector.y * t,
+                ray.StartPoint.z + ray.Vector.z * t); // точка перетину
+
             // u i v це барицентричні координати
-            double u = VectorLenght(CrossProduct(e1, ray.Vector)) + VectorLenght(CrossProduct(e1, vectorTmp)); 
+            double u = VectorLenght(CrossProduct(pointOfInters-vertex1, e1));
             u /= VectorLenght(Normal);
 
             if (u < 0 || u > 1)
@@ -42,7 +44,7 @@ namespace RayProcessor.Lib
                 return false;
             }
             
-            double v = VectorLenght(CrossProduct(e2, ray.Vector)) + VectorLenght(CrossProduct(e2, vectorTmp));
+            double v = VectorLenght(CrossProduct(pointOfInters-vertex1, e2));
             v /= VectorLenght(Normal);
             
             if (v < 0 || v > 1|| u+v>1)
@@ -55,9 +57,9 @@ namespace RayProcessor.Lib
 
         private Point CrossProduct(Point vector1, Point vector2) //векторний добуток
         {
-            double x = vector1.y * vector2.z - vector2.z * vector1.y;
-            double y = (-1)*(vector1.x * vector2.z - vector2.z * vector1.x);
-            double z = vector1.x * vector2.y - vector2.y * vector1.x;
+            double x = vector1.y * vector2.z - vector2.y * vector1.z;
+            double y = (-1)*(vector1.x * vector2.z - vector2.x * vector1.z);
+            double z = vector1.x * vector2.y - vector2.x * vector1.y;
             return new Point(x, y, z);
         }
 
