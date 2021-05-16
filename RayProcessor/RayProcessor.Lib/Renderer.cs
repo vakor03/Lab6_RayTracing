@@ -10,11 +10,13 @@ namespace RayProcessor.Lib
     {
         private Point camera;
         private Screen screen;
+        private Point light;
 
-        public Renderer(Point camera, Screen screen)
+        public Renderer(Point camera, Screen screen, Point light)
         {
             this.screen = screen;
             this.camera = camera;
+            this.light = light;
         }
 
 
@@ -61,7 +63,18 @@ namespace RayProcessor.Lib
 
         private double GetPixelByHitInfo(HitInfo info)
         {
-            return info.hit ? 1 : 0;
+            if (info.hit)
+            {
+                Point vectorL = light - info.hitPoint;
+                double cos = vectorL.DotProduct(info.triangle.Normal);
+                cos /= vectorL.magnitude * info.triangle.Normal.magnitude;
+                if (cos < 0)
+                {
+                    return 0;
+                }
+                return cos / (vectorL.magnitude*vectorL.magnitude);
+            }
+            return 0;
         }
 
         public void Render(List<Triangle> triangles)

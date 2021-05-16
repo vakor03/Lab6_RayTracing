@@ -17,8 +17,9 @@ namespace RayProcesssor.ConsoleApp
 
             Point camera = new(0, 2, 0);
             Screen screen = new(100, 100, .005, camera, new(0, -1, 0));
+            Point light = new(1, 2, 1);
 
-            Renderer renderer = new(camera, screen);
+            Renderer renderer = new(camera, screen, light);
             
 
             //screen.OutputToConsole();
