@@ -7,18 +7,16 @@ namespace RayProcessor.Lib
 {
     public class FileManager
     {
-        private string _path;
 
-        public FileManager(string path)
+        public FileManager()
         {
-            _path = path;
         }
 
-        public List<Face> ReadObj()
+        public List<Triangle> ReadObj(string path)
         {
             List<Point> verts = new List<Point>();
-            List<Face> faces = new List<Face>();
-            using StreamReader streamReader = new StreamReader(_path);
+            List<Triangle> faces = new List<Triangle>();
+            using StreamReader streamReader = new StreamReader(path);
             string inputStr;
             while ((inputStr = streamReader.ReadLine()) != null)
             {
@@ -44,11 +42,47 @@ namespace RayProcessor.Lib
                         idArray[i - 1] = id-1;
                     }
 
-                    faces.Add(new Face(new[] {verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]}));
+                    faces.Add(new Triangle(verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]));
                 }
             }
 
             return faces;
+        }
+
+        public void WriteBMP(string path, Screen screen)
+        {
+            int countOfZeroBits = 3-(Convert.ToInt32(screen.screenPixelSize.width)*3-1)%4;
+            using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
+            {
+                writer.Write('B');
+                writer.Write('M');
+                writer.Write(Convert.ToUInt32(screen.screenPixelSize.width*screen.screenPixelSize.height+54));
+                writer.Write((UInt16)0);
+                writer.Write((UInt16)0);
+                writer.Write((UInt32)54);
+                writer.Write((UInt32)40);
+                writer.Write((UInt32)screen.screenPixelSize.width);
+                writer.Write((UInt32)screen.screenPixelSize.height);
+                writer.Write((UInt16)1);
+                writer.Write((UInt16)24);
+                for (int i = 0; i < 6; i++)
+                {
+                    writer.Write((UInt32)0);
+                }
+                for (int i = 0; i < screen.screenPixelSize.height; i++)
+                {
+                    for (int j = 0; j < screen.screenPixelSize.width; j++)
+                    {
+                        writer.Write((byte)(screen.pixels[i,j]*255));
+                        writer.Write((byte)(screen.pixels[i,j]*255));
+                        writer.Write((byte)(screen.pixels[i,j]*255));
+                    }
+                    for (int j = 0; j < countOfZeroBits; j++)
+                    {
+                        writer.Write((byte)0);
+                    }
+                }
+            }
         }
     }
 }
