@@ -11,12 +11,14 @@ namespace RayProcessor.Lib
         private Point camera;
         private Screen screen;
         private Point light;
+        private List<Triangle> triangles;
 
-        public Renderer(Point camera, Screen screen, Point light)
+        public Renderer(Point camera, Screen screen, Point light, List<Triangle> triangles)
         {
             this.screen = screen;
             this.camera = camera;
             this.light = light;
+            this.triangles = triangles;
         }
 
 
@@ -65,19 +67,27 @@ namespace RayProcessor.Lib
         {
             if (info.hit)
             {
-                Point vectorL = light - info.hitPoint;
-                double cos = vectorL.DotProduct(info.triangle.Normal);
-                cos /= vectorL.magnitude * info.triangle.Normal.magnitude;
+                Ray vectorL = new Ray(light - info.hitPoint, info.hitPoint);
+                foreach (Triangle triangle in triangles)
+                {
+                    (bool intersected, Point intersection) = triangle.IsCrossesTriangle(vectorL);
+                    if (intersected && !triangle.Equals(info.triangle))
+                    {
+                        return 0;
+                    }
+                }
+                double cos = vectorL.Vector.DotProduct(info.triangle.Normal);
+                cos /= vectorL.Vector.magnitude * info.triangle.Normal.magnitude;
                 if (cos < 0)
                 {
                     return 0;
                 }
-                return cos / (vectorL.magnitude*vectorL.magnitude);
+                return cos / (vectorL.Vector.magnitude*vectorL.Vector.magnitude);
             }
             return 0;
         }
 
-        public void Render(List<Triangle> triangles)
+        public void Render()
         {
             // fire ray from each pixel
             for (int i = 0; i < screen.screenPixelSize.height; i++)
