@@ -67,22 +67,22 @@ namespace RayProcessor.Lib
         {
             if (info.hit)
             {
-                Ray vectorL = new Ray(light - info.hitPoint, info.hitPoint);
+                Ray RayL = new Ray(light - info.hitPoint, info.hitPoint);
                 foreach (Triangle triangle in triangles)
                 {
-                    (bool intersected, Point intersection) = triangle.IsCrossesTriangle(vectorL);
-                    if (intersected && !triangle.Equals(info.triangle))
+                    (bool intersected, Point intersection) = triangle.IsCrossesTriangle(RayL);
+                    if (intersected && !triangle.Equals(info.triangle) && (light-intersection).magnitude<RayL.Vector.magnitude)
                     {
                         return 0;
                     }
                 }
-                double cos = vectorL.Vector.DotProduct(info.triangle.Normal);
-                cos /= vectorL.Vector.magnitude * info.triangle.Normal.magnitude;
+                double cos = RayL.Vector.DotProduct(info.triangle.Normal);
+                cos /= RayL.Vector.magnitude * info.triangle.Normal.magnitude;
                 if (cos < 0)
                 {
                     return 0;
                 }
-                return cos / (vectorL.Vector.magnitude*vectorL.Vector.magnitude);
+                return cos / (RayL.Vector.magnitude*RayL.Vector.magnitude);
             }
             return 0;
         }
