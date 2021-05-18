@@ -9,7 +9,8 @@ namespace RayProcesssor.ConsoleApp
         static void Main(string[] args)
         {
             Point camera = new(0, 2, 0);
-            Screen screen = new(100, 100, .005, camera, new(0, -1, 0));
+            Screen screen = new(100, 100, .005, camera, new Point(0.25, 1, -0.25), 
+                new Point(0.25, 1, 0.25), new Point(-0.25, 1, 0.25));
             Point light = new(1, 2, 1);
             FileManager manager = new();
             Renderer renderer = new(camera, screen, light, manager.ReadObj(@"C:\Users\user\Desktop\cow.obj"));

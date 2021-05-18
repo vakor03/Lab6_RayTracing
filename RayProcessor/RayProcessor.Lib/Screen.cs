@@ -18,6 +18,7 @@ namespace RayProcessor.Lib
         // a normal to the screen, facing the direction we are looking at
         private Point normal;
         private Point screenCenter;
+        private Point[] screenCoordinates;
 
 
         // width and height is the number of pixels
@@ -36,16 +37,20 @@ namespace RayProcessor.Lib
         // so, basically, it sets the direction the camera is facing and the distance
         // of the screen to the camera
         
-        public Screen(int width, int height, double pixelSize, Point camera, Point cameraVector)
+        public Screen(int width, int height, double pixelSize, Point camera, Point a, Point b, Point c)
         {
             pixels = new double[height, width];
             this.screenPixelSize = (width, height);
             this.pixelSize = pixelSize;
-            this.normal = cameraVector;
-            this.screenCenter = camera + cameraVector;
+            this.normal = (a-b).CrossProduct(c-b);
+            this.screenCenter = camera + normal;
+            screenCoordinates = new Point[4];
+            screenCoordinates[0] = a;
+            screenCoordinates[1] = b;
+            screenCoordinates[2] = c;
+            screenCoordinates[3] = screenCenter + screenCenter - b;
         }
-
-
+        
         public void SetPixel(double shade, int x, int y)
         {
             pixels[y, x] = shade;
@@ -53,13 +58,20 @@ namespace RayProcessor.Lib
 
         public Point GetPixelXYZPoint(int pixelX, int pixelY)
         {
-            Point directionalSinuses = normal.GetDirectionalSinuses();
+            //Point directionalSinuses = normal.GetDirectionalSinuses();
 
-            pixelX -= screenPixelSize.width / 2;
-            pixelY -= screenPixelSize.height / 2;
-            return new Point(screenCenter.x + pixelX * directionalSinuses.x * pixelSize,
-                screenCenter.y + pixelX * directionalSinuses.y * pixelSize,
-                screenCenter.z + pixelY * directionalSinuses.z * pixelSize);
+            // pixelX -= screenPixelSize.width / 2;
+            // pixelY -= screenPixelSize.height / 2;
+            Point vectorBC = screenCoordinates[2] - screenCoordinates[1];
+            Point shiftToRight = new Point(vectorBC.x * pixelX / screenPixelSize.width  + screenCoordinates[1].x,
+                vectorBC.y  * pixelX / screenPixelSize.width + screenCoordinates[1].y,
+                vectorBC.z  * pixelX / screenPixelSize.width + screenCoordinates[1].z);
+            
+            Point vectorBA = screenCoordinates[0] - screenCoordinates[1];
+            Point shiftDown = new Point(vectorBA.x* pixelY / screenPixelSize.height  + shiftToRight.x,
+                vectorBA.y * pixelY/ screenPixelSize.height  + shiftToRight.y,
+                vectorBA.z * pixelY / screenPixelSize.height + shiftToRight.z);
+            return shiftDown;
         }
 
         public void OutputToConsole()
