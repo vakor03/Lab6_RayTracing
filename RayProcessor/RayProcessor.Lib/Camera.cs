@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RayProcessor.Lib
 {
     // CURRENTLY WORKS ONLY ALIGNED WITH Z AXIS (i guess)
-    public class Screen
+    public class Camera
     {
         // colors of each pixel
         // (0, 0) - bottom left
@@ -17,32 +17,39 @@ namespace RayProcessor.Lib
 
         // a normal to the screen, facing the direction we are looking at
         private Point normal;
-        private Point screenCenter;
+        private Point cameraPoint;
+        private Point radDegrees;
 
-
-        // width and height is the number of pixels
-        //public Screen(int width, int height, double pixelSize, Point normal, Point screenCenter)
-        //{
-        //    pixels = new char[width, height];
-        //    this.screenPixelSize = (width, height);
-        //    this.pixelSize = pixelSize;
-        //    this.normal = normal;
-        //    this.screenCenter = screenCenter;
-        //}
-
+        // for determining pixel points
+        private Point rayShootStartingPoint;
+        
+        private Point xDir;
+        private Point yDir;
 
         // cameraVector starts in camera and goes to screen center point
         // screen is perpendicular to this vector
         // so, basically, it sets the direction the camera is facing and the distance
         // of the screen to the camera
-        
-        public Screen(int width, int height, double pixelSize, Point camera, Point cameraVector)
+
+        public Camera(int width, int height, double pixelSize, Point cameraPoint, Point xyzRotationDegrees)
         {
             pixels = new double[height, width];
-            this.screenPixelSize = (width, height);
+            screenPixelSize = (width, height);
             this.pixelSize = pixelSize;
-            this.normal = cameraVector;
-            this.screenCenter = camera + cameraVector;
+            this.cameraPoint = cameraPoint;
+            this.radDegrees = new(xyzRotationDegrees.x / 180 * Math.PI,
+                xyzRotationDegrees.y / 180 * Math.PI,
+                xyzRotationDegrees.z / 180 * Math.PI);
+
+
+            Point defaultScreenXDir = new Point(1, 0, 0);
+            Point defaultScreenYDir = new Point(0, 0, 1);
+            xDir = defaultScreenXDir.RotateByAngle(radDegrees);
+            yDir = defaultScreenYDir.RotateByAngle(radDegrees);
+
+            Point defaultViewDirectionVec = new Point(0, 1, 0);
+            Point rayShootBackOffset = -defaultViewDirectionVec.RotateByAngle(radDegrees);
+            rayShootStartingPoint = cameraPoint + rayShootBackOffset;
         }
 
 
@@ -51,15 +58,19 @@ namespace RayProcessor.Lib
             pixels[y, x] = shade;
         }
 
-        public Point GetPixelXYZPoint(int pixelX, int pixelY)
+        private Point GetPixelXYZPoint(int pixelX, int pixelY)
         {
-            Point directionalSinuses = normal.GetDirectionalSinuses();
-
             pixelX -= screenPixelSize.width / 2;
             pixelY -= screenPixelSize.height / 2;
-            return new Point(screenCenter.x + pixelX * directionalSinuses.x * pixelSize,
-                screenCenter.y + pixelX * directionalSinuses.y * pixelSize,
-                screenCenter.z + pixelY * directionalSinuses.z * pixelSize);
+
+            return cameraPoint + pixelSize * (pixelX * xDir + pixelY * yDir);
+        }
+
+        public Ray GetPixelRay(int pixelX, int pixelY)
+        {
+            Point pixelPoint = GetPixelXYZPoint(pixelX, pixelY);
+            Ray ray = new(pixelPoint - rayShootStartingPoint, rayShootStartingPoint);
+            return ray;
         }
 
         public void OutputToConsole()

@@ -17,6 +17,24 @@ namespace RayProcessor.Lib
             magnitude = Math.Sqrt(x * x + y * y + z * z);
         }
 
+        public Point RotateByAngle(Point rotationAnglesXYZrads)
+        {
+            // rotate around z
+            double x =  this.x * Math.Cos(rotationAnglesXYZrads.z) - this.y * Math.Sin(rotationAnglesXYZrads.y);
+            double y = this.x * Math.Sin(rotationAnglesXYZrads.z) + this.y * Math.Cos(rotationAnglesXYZrads.y);
+
+            // around y
+            double z = -x * Math.Sin(rotationAnglesXYZrads.y) + this.z * Math.Cos(rotationAnglesXYZrads.y);
+            x = x * Math.Cos(rotationAnglesXYZrads.y) + this.z * Math.Sin(rotationAnglesXYZrads.y);
+
+            // around x
+            double yBeforeRot = y;
+            y = y * Math.Cos(rotationAnglesXYZrads.x) - z * Math.Sin(rotationAnglesXYZrads.x);
+            z = yBeforeRot * Math.Sin(rotationAnglesXYZrads.x) + z * Math.Cos(rotationAnglesXYZrads.x);
+
+            return new(x, y, z);
+        }
+
         public double DistanceToOtherPoint(Point point)
         {
             return Math.Sqrt(Math.Pow(x - point.x, 2) +
@@ -37,6 +55,11 @@ namespace RayProcessor.Lib
             return vector1.x * this.x + vector1.y * this.y + vector1.z * this.z;
         }
 
+        public double AngleInRadsWithOtherVec(Point v)
+        {
+            return Math.Acos(DotProduct(v) / v.magnitude / magnitude);
+        }
+
         public Point GetDirectionalСosinuses()
         {
 
@@ -54,6 +77,16 @@ namespace RayProcessor.Lib
         public static Point operator+(Point a, Point b)
         {
             return new(a.x + b.x, a.y + b.y, a.z + b.z);
+        }
+
+        public static Point operator *(double c, Point p)
+        {
+            return new(p.x * c, p.y * c, p.z * c);
+        }
+
+        public static Point operator -(Point p)
+        {
+            return new(-p.x, -p.y, -p.z);
         }
         
         public static Point operator -(Point p1, Point p2)

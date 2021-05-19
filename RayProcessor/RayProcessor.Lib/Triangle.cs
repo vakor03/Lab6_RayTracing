@@ -17,7 +17,7 @@ namespace RayProcessor.Lib
             vertex3 = v3;
         }
 
-        public (bool intersects, Point pointOfIntersection) IsCrossesTriangle(Ray ray)
+        public (bool intersects, Point pointOfIntersection) CrossesTriangle(Ray ray)
         {
             double epsilon = 0.00000001;
             Point e1 = vertex1 - vertex2;
