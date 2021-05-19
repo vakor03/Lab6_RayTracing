@@ -48,7 +48,7 @@ namespace RayProcessor.Lib
             yDir = defaultScreenYDir.RotateByAngle(radDegrees);
 
             Point defaultViewDirectionVec = new Point(0, 1, 0);
-            Point rayShootBackOffset = -defaultViewDirectionVec.RotateByAngle(radDegrees);
+            Point rayShootBackOffset = defaultViewDirectionVec.RotateByAngle(radDegrees);
             rayShootStartingPoint = cameraPoint + rayShootBackOffset;
         }
 

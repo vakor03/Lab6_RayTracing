@@ -20,16 +20,22 @@ namespace RayProcessor.Lib
         }
 
 
-        private HitInfo FireRay(int pixelX, int pixelY, List<Triangle> triangles)
+        private HitInfo FireRay(int pixelX, int pixelY, List<Triangle> triangles, Triangle debug)
         {
             Ray rayToFire = camera.GetPixelRay(pixelX, pixelY);
 
             HitInfo closestHit = new(false, null, new(0, 0, 0));
             double closestDistance = double.PositiveInfinity;
-
+            
             foreach (Triangle triangle in triangles)
             {
                 (bool intersected, Point intersection) = triangle.CrossesTriangle(rayToFire);
+                if (intersected && triangle == debug)
+                {
+                    Console.WriteLine(rayToFire);
+                    Console.WriteLine(intersection);
+                    Console.WriteLine();
+                }
                 if (intersected)
                 {
                     double distance = rayToFire.StartPoint.DistanceToOtherPoint(intersection);
@@ -69,7 +75,7 @@ namespace RayProcessor.Lib
             return 0;
         }
 
-        public void Render()
+        public void Render(Triangle debug)
         {
             // fire ray from each pixel
             for (int i = 0; i < camera.screenPixelSize.height; i++)
@@ -77,7 +83,7 @@ namespace RayProcessor.Lib
                 Console.WriteLine($"{(double)i / camera.screenPixelSize.height * 100} %");
                 for (int j = 0; j < camera.screenPixelSize.width; j++)
                 {
-                    HitInfo info = FireRay(j, i, triangles);
+                    HitInfo info = FireRay(j, i, triangles, debug);
                     camera.SetPixel(GetPixelByHitInfo(info), j, i);
                 }
             }
