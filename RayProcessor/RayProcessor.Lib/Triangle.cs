@@ -17,7 +17,7 @@ namespace RayProcessor.Lib
             vertex3 = v3;
         }
 
-        public (bool intersects, Point pointOfIntersection) IsCrossesTriangle(Ray ray)
+        public (bool intersects, Point pointOfIntersection) CrossesTriangle(Ray ray)
         {
             double epsilon = 0.00000001;
             Point e1 = vertex1 - vertex2;
@@ -35,6 +35,11 @@ namespace RayProcessor.Lib
             double t = -(ray.StartPoint - vertex1).DotProduct(Normal)/tmp; //відстань від початку промення до точки перетину 
             Point pointOfInters = new Point(ray.StartPoint.x + ray.Vector.x * t,ray.StartPoint.y + ray.Vector.y * t,
                 ray.StartPoint.z + ray.Vector.z * t); // точка перетину
+
+            if (!(ray.Vector.Normalize() == (pointOfInters - ray.StartPoint).Normalize()))
+            {
+                return (false, new(0, 0, 0));
+            }
             
             // u, v i t1 це барицентричні координати
             double u = (pointOfInters-vertex1).CrossProduct(e1).magnitude;
