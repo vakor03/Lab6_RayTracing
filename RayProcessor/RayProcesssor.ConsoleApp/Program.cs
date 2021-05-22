@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using RayProcessor.Lib;
 
@@ -17,7 +17,7 @@ namespace RayProcesssor.ConsoleApp
             triangles.Add(floor);
             Renderer renderer = new(camera, light, triangles);
 
-            renderer.Render(floor);
+            renderer.Render();
             manager.WriteBMP(@"output.bmp", camera);
 
             
