@@ -6,7 +6,7 @@ namespace RayProcesssor.ConsoleApp
 {
     class Program
     {
-        public static Triangle floor = new Triangle(new Point(-10, 0, -0.1), new Point(10, 10, -0.1), new Point(0, -10, -0.1));
+        public static Triangle floor = new Triangle(new Point(10, 10, -0.5), new Point(-10, 0, -0.5), new Point(0, -10, -0.5));
         static void Main(string[] args)
         {
             Point cameraPos = new(0, 2, 0);
