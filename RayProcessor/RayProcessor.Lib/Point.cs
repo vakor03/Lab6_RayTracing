@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.VisualBasic.CompilerServices;
+
 namespace RayProcessor.Lib
 {
     public struct Point
@@ -15,6 +17,29 @@ namespace RayProcessor.Lib
             this.z = z;
 
             magnitude = Math.Sqrt(x * x + y * y + z * z);
+        }
+
+        public Point Normalize()
+        {
+            return new Point(this.x / this.magnitude, this.y / this.magnitude, this.z / this.magnitude);
+        }
+
+        public static bool operator ==(Point vector1, Point vector2)
+        {
+            if (Math.Abs(vector1.x - vector2.x) <= 0.0000001 && Math.Abs(vector1.y - vector2.y) <= 0.0000001
+                                                             && Math.Abs(vector1.z - vector2.z) <= 0.0000001)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool operator !=(Point vector1, Point vector2)
+        {
+            return !(vector1 == vector2);
         }
 
         public Point RotateByAngle(Point rotationAnglesXYZrads)
