@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using RayProcessor.Lib;
 
-namespace RayProcessor.Lib
+namespace RayProcessor.Tree
 {
     public class FileManager
     {
-
         public FileManager()
         {
         }
 
-        public List<Triangle> ReadObj(string path)
+        public void ReadObj(string path, Tree tree)
         {
             List<Point> verts = new List<Point>();
             List<Triangle> faces = new List<Triangle>();
@@ -39,48 +39,50 @@ namespace RayProcessor.Lib
                     for (int i = 1; i < 4; i++)
                     {
                         int id = int.Parse(strings[i].Split('/')[0]);
-                        idArray[i - 1] = id-1;
+                        idArray[i - 1] = id - 1;
                     }
-
-                    faces.Add(new Triangle(verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]));
+                    tree.AddTriangle(new Triangle(verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]));
+                    //faces.Add(new Triangle(verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]));
                 }
             }
-            
 
-            return faces;
+
+           // return faces;
         }
 
         public void WriteBMP(string path, Camera camera)
         {
-            int countOfZeroBits = 3-(Convert.ToInt32(camera.screenPixelSize.width)*3-1)%4;
+            int countOfZeroBits = 3 - (Convert.ToInt32(camera.screenPixelSize.width) * 3 - 1) % 4;
             using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
                 writer.Write('B');
                 writer.Write('M');
-                writer.Write(Convert.ToUInt32(camera.screenPixelSize.width*camera.screenPixelSize.height+54));
-                writer.Write((UInt16)0);
-                writer.Write((UInt16)0);
-                writer.Write((UInt32)54);
-                writer.Write((UInt32)40);
-                writer.Write((UInt32)camera.screenPixelSize.width);
-                writer.Write((UInt32)camera.screenPixelSize.height);
-                writer.Write((UInt16)1);
-                writer.Write((UInt16)24);
+                writer.Write(Convert.ToUInt32(camera.screenPixelSize.width * camera.screenPixelSize.height + 54));
+                writer.Write((UInt16) 0);
+                writer.Write((UInt16) 0);
+                writer.Write((UInt32) 54);
+                writer.Write((UInt32) 40);
+                writer.Write((UInt32) camera.screenPixelSize.width);
+                writer.Write((UInt32) camera.screenPixelSize.height);
+                writer.Write((UInt16) 1);
+                writer.Write((UInt16) 24);
                 for (int i = 0; i < 6; i++)
                 {
-                    writer.Write((UInt32)0);
+                    writer.Write((UInt32) 0);
                 }
+
                 for (int i = 0; i < camera.screenPixelSize.height; i++)
                 {
                     for (int j = 0; j < camera.screenPixelSize.width; j++)
                     {
-                        writer.Write((byte)(camera.pixels[i,j]*255));
-                        writer.Write((byte)(camera.pixels[i,j]*255));
-                        writer.Write((byte)(camera.pixels[i,j]*255));
+                        writer.Write((byte) (camera.pixels[i, j] * 255));
+                        writer.Write((byte) (camera.pixels[i, j] * 255));
+                        writer.Write((byte) (camera.pixels[i, j] * 255));
                     }
+
                     for (int j = 0; j < countOfZeroBits; j++)
                     {
-                        writer.Write((byte)0);
+                        writer.Write((byte) 0);
                     }
                 }
             }

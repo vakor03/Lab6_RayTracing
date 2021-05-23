@@ -2,11 +2,12 @@ using System;
 
 namespace RayProcessor.Lib
 {
-    public class Triangle 
+    public class Triangle
     {
-        private Point vertex1;
-        private Point vertex2;
-        private Point vertex3;
+        public Point[] Points => new []{vertex1, vertex2, vertex3};
+        public Point vertex1;
+        public Point vertex2;
+        public Point vertex3;
         public Point Center { get; private set; }
         public Point Normal { get; private set; }
 
