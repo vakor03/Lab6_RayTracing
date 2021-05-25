@@ -24,6 +24,51 @@ namespace RayProcessor.Lib
             }
         }
 
+        public bool Intersects(Ray ray)
+        {
+            double tMinX = (_xMin - ray.StartPoint.x) / ray.Vector.x;
+            double tMaxX = (_xMax - ray.StartPoint.x) / ray.Vector.x;
+
+            if (tMinX > tMaxX)
+            {
+                double temp = tMaxX;
+                tMaxX = tMinX;
+                tMinX = temp;
+            }
+
+            double tMinY  = (_yMin - ray.StartPoint.y) / ray.Vector.y;
+            double tMaxY  = (_yMax - ray.StartPoint.y) / ray.Vector.y;
+
+            if (tMinY > tMaxY)
+            {
+                double temp = tMaxY;
+                tMaxY = tMinY;
+                tMinY = temp;
+            }
+
+            double tMinZ = (_zMin - ray.StartPoint.z) / ray.Vector.z;
+            double tMaxZ = (_zMax - ray.StartPoint.z) / ray.Vector.z;
+
+            if (tMinZ > tMaxZ)
+            {
+                double temp = tMaxZ;
+                tMaxZ = tMinZ;
+                tMinZ = temp;
+            }
+
+            double tMinGreatest = Math.Max(tMinZ, Math.Max(tMinY, tMinX));
+            double tMaxLowest = Math.Min(tMaxZ, Math.Min(tMaxY, tMaxX));
+
+            if (tMaxLowest < 0 || tMinGreatest > tMaxLowest)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public MBB(Triangle triangle)
         {
             AddTriangle(triangle);
