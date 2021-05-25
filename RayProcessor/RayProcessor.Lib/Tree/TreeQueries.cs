@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RayProcessor.Lib.Tree
+namespace RayProcessor.Lib
 {
     public class TreeQueries
     {
