@@ -8,56 +8,15 @@ namespace RayProcessor.Lib
 {
     public class Renderer
     {
-        private Point camera;
-        private Screen screen;
+        private Camera camera;
         private Point light;
+        private Tree tree;
 
-        public Renderer(Point camera, Screen screen, Point light)
+        public Renderer(Camera camera, Point light, Tree tree)
         {
-            this.screen = screen;
             this.camera = camera;
             this.light = light;
-        }
-
-
-        private bool previousHit = false;
-        private Ray prray = null;
-        private bool prePreviousHit = false;
-        private HitInfo FireRay(int pixelX, int pixelY, List<Triangle> triangles)
-        {
-            Point pointOnScreen = screen.GetPixelXYZPoint(pixelX, pixelY);
-            Ray rayToFire = new(pointOnScreen - camera, camera);
-            //Console.WriteLine(rayToFire);
-
-            HitInfo closestHit = new(false, null, new(0, 0, 0));
-            double closestDistance = double.PositiveInfinity;
-
-            foreach (Triangle triangle in triangles)
-            {
-                (bool intersected, Point intersection) = triangle.IsCrossesTriangle(rayToFire);
-                if (intersected)
-                {
-                    double distance = camera.DistanceToOtherPoint(intersection);
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestHit = new(true, triangle, intersection);
-                    }
-                }
-            }
-
-            //if (prePreviousHit && !previousHit && closestHit.hit)
-            //{
-            //    Console.WriteLine(prray);
-            //    Console.WriteLine(rayToFire);
-            //    Console.WriteLine();
-            //}
-
-            prePreviousHit = previousHit;
-            previousHit = closestHit.hit;
-            prray = rayToFire;
-
-            return closestHit;
+            this.tree = tree;
         }
 
 
@@ -65,28 +24,36 @@ namespace RayProcessor.Lib
         {
             if (info.hit)
             {
-                Point vectorL = light - info.hitPoint;
-                double cos = vectorL.DotProduct(info.triangle.Normal);
-                cos /= vectorL.magnitude * info.triangle.Normal.magnitude;
+                Ray RayL = new Ray(light - info.hitPoint, info.hitPoint);
+                HitInfo closesHitToLight = tree.GetClosestHit(RayL, tree.Root);
+                if (closesHitToLight.hit && closesHitToLight.triangle != info.triangle &&
+                    (light-closesHitToLight.hitPoint).magnitude<RayL.Vector.magnitude)
+                {
+                    return 0;
+                }
+                double cos = RayL.Vector.DotProduct(info.triangle.Normal);
+                cos /= RayL.Vector.magnitude * info.triangle.Normal.magnitude;
                 if (cos < 0)
                 {
                     return 0;
                 }
-                return cos / (vectorL.magnitude*vectorL.magnitude);
+                return cos / (RayL.Vector.magnitude*RayL.Vector.magnitude);
             }
-            return 0;
+            return 0.75;
         }
 
-        public void Render(List<Triangle> triangles)
+        public void Render()
         {
             // fire ray from each pixel
-            for (int i = 0; i < screen.screenPixelSize.height; i++)
+            for (int i = 0; i < camera.screenPixelSize.height; i++)
             {
-                Console.WriteLine($"{(double)i / screen.screenPixelSize.height * 100} %");
-                for (int j = 0; j < screen.screenPixelSize.width; j++)
+                Console.Clear();
+                Console.WriteLine($"{(double)i / camera.screenPixelSize.height * 100:F3} %");
+                for (int j = 0; j < camera.screenPixelSize.width; j++)
                 {
-                    HitInfo info = FireRay(j, i, triangles);
-                    screen.SetPixel(GetPixelByHitInfo(info), j, i);
+                    Ray rayToFire = camera.GetPixelRay(j, i);
+                    HitInfo closestHit =tree.GetClosestHit(rayToFire, tree.Root);
+                    camera.SetPixel(GetPixelByHitInfo(closestHit), j, i);
                 }
             }
         }
