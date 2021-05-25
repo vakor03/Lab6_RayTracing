@@ -59,5 +59,13 @@ namespace RayProcessor.Lib.Tests
             MBB mbb2 = new MBB(new Point(0, 0, 0), new Point(2, 2, 2));
             Assert.AreEqual(-30, MBB.CheckVolumeChange(mbb1,mbb2,new Point(3,3,0)));
         }
+
+        [TestMethod]
+        public void IntersectTest()
+        {
+            MBB mbb2 = new MBB(new Point(0, 0, 0), new Point(2, 2, 2));
+            Ray ray = new Ray(new Point(-1, 0, 0), new Point(-4, 1, 1));
+            Assert.AreEqual(mbb2.Intersects(ray), false);
+        }
     }
 }
