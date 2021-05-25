@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayProcessor.Lib", "RayProc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayProcessor.Lib.Tests", "RayProcessor.Lib.Tests\RayProcessor.Lib.Tests.csproj", "{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayProcessor.Tree", "RayProcessor.Tree\RayProcessor.Tree.csproj", "{9119EBCC-E334-4F98-B09B-995C5F8850E2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +24,5 @@ Global
 		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C611E1EE-DB7B-445E-8D6A-F70A1C21B891}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9119EBCC-E334-4F98-B09B-995C5F8850E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9119EBCC-E334-4F98-B09B-995C5F8850E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9119EBCC-E334-4F98-B09B-995C5F8850E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9119EBCC-E334-4F98-B09B-995C5F8850E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

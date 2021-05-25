@@ -81,12 +81,16 @@ namespace RayProcessor.Lib
             }
         }
 
-        public HitInfo GetClosestHit(Ray ray, Node currentNode)
+        public HitInfo GetClosestHit(Ray ray, Branch currentNode)
         {
-            if (((Branch)currentNode).Childs[0] is Leaf)
+            if (!currentNode.MBB.Intersects(ray))
+            {
+                return new HitInfo();
+            }
+            if (currentNode.Childs[0] is Leaf)
             {
                 HitInfo closesHit = new HitInfo();
-                foreach (Leaf child in ((Branch) currentNode).Childs)
+                foreach (Leaf child in currentNode.Childs)
                 {
                     (bool intersected, Point intersection) = child.Triangle.CrossesTriangle(ray);
                     if (intersected)
@@ -107,17 +111,29 @@ namespace RayProcessor.Lib
             }
             else
             {
-                HitInfo hit1 = GetClosestHit(ray, ((Branch) currentNode).Childs[0]);
-                HitInfo hit2 = GetClosestHit(ray, ((Branch) currentNode).Childs[1]);
+                HitInfo hit1 = GetClosestHit(ray, ( currentNode).Childs[0] as Branch);
+                HitInfo hit2 = GetClosestHit(ray, ( currentNode).Childs[1] as Branch);
+                if (!hit1.hit && !hit2.hit)
+                {
+                    return new HitInfo();
+                }
+
+                if (!hit1.hit)
+                {
+                    return hit2;
+                }
+
+                if (!hit2.hit)
+                {
+                    return hit1;
+                }
                 if ((ray.StartPoint - hit1.hitPoint).magnitude >
                     (ray.StartPoint - hit2.hitPoint).magnitude)
                 {
                     return hit2;
                 }
-                else
-                {
-                    return hit1;
-                }
+
+                return hit1;
             }
         }
     }
