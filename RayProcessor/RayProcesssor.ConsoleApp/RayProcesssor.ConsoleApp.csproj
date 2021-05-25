@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RayProcessor.Lib\RayProcessor.Lib.csproj" />
-      <ProjectReference Include="..\RayProcessor.Tree\RayProcessor.Tree.csproj" />
     </ItemGroup>
 
 </Project>
