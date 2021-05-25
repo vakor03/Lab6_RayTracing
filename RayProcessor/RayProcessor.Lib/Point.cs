@@ -45,8 +45,8 @@ namespace RayProcessor.Lib
         public Point RotateByAngle(Point rotationAnglesXYZrads)
         {
             // rotate around z
-            double x =  this.x * Math.Cos(rotationAnglesXYZrads.z) - this.y * Math.Sin(rotationAnglesXYZrads.y);
-            double y = this.x * Math.Sin(rotationAnglesXYZrads.z) + this.y * Math.Cos(rotationAnglesXYZrads.y);
+            double x =  this.x * Math.Cos(rotationAnglesXYZrads.z) - this.y * Math.Sin(rotationAnglesXYZrads.z);
+            double y = this.x * Math.Sin(rotationAnglesXYZrads.z) + this.y * Math.Cos(rotationAnglesXYZrads.z);
 
             // around y
             double z = -x * Math.Sin(rotationAnglesXYZrads.y) + this.z * Math.Cos(rotationAnglesXYZrads.y);

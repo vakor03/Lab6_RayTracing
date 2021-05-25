@@ -45,10 +45,13 @@ namespace RayProcessor.Lib
             Point defaultScreenXDir = new Point(1, 0, 0);
             Point defaultScreenYDir = new Point(0, 0, 1);
             xDir = defaultScreenXDir.RotateByAngle(radDegrees);
+            Console.WriteLine("Xdir" + xDir);
             yDir = defaultScreenYDir.RotateByAngle(radDegrees);
+            Console.WriteLine("ydir" + yDir);
 
             Point defaultViewDirectionVec = new Point(0, 1, 0);
             Point rayShootBackOffset = defaultViewDirectionVec.RotateByAngle(radDegrees);
+            Console.WriteLine(rayShootBackOffset);
             rayShootStartingPoint = cameraPoint + rayShootBackOffset;
         }
 
