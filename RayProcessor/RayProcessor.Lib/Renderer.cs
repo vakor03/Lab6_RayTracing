@@ -47,8 +47,11 @@ namespace RayProcessor.Lib
             // fire ray from each pixel
             for (int i = 0; i < camera.screenPixelSize.height; i++)
             {
-                Console.Clear();
-                Console.WriteLine($"{(double)i / camera.screenPixelSize.height * 100:F3} %");
+                if (i % 20 == 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"{(double)i / camera.screenPixelSize.height * 100:F3} %");
+                }
                 for (int j = 0; j < camera.screenPixelSize.width; j++)
                 {
                     Ray rayToFire = camera.GetPixelRay(j, i);
