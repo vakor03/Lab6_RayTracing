@@ -87,6 +87,7 @@ namespace RayProcessor.Lib
             {
                 return new HitInfo();
             }
+
             if (currentNode.Childs[0] is Leaf)
             {
                 HitInfo closesHit = new HitInfo();
@@ -99,7 +100,7 @@ namespace RayProcessor.Lib
                         {
                             closesHit = new HitInfo(true, child.Triangle, intersection);
                         }
-                        else if ((ray.StartPoint - intersection).magnitude >
+                        else if ((ray.StartPoint - intersection).magnitude <
                                 (ray.StartPoint - closesHit.hitPoint).magnitude)
                         {
                             closesHit = new HitInfo(true, child.Triangle, intersection);
