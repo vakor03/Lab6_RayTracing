@@ -10,13 +10,13 @@ namespace RayProcessor.Lib
     {
         private Camera camera;
         private Point light;
-        private TreeQueries treeQueries;
+        private Tree tree;
 
         public Renderer(Camera camera, Point light, Tree tree)
         {
             this.camera = camera;
             this.light = light;
-            this.treeQueries = new(tree);
+            this.tree = tree;
         }
 
 
@@ -25,7 +25,7 @@ namespace RayProcessor.Lib
             if (info.hit)
             {
                 Ray RayL = new Ray(light - info.hitPoint, info.hitPoint);
-                HitInfo closesHitToLight = treeQueries.GetClosestHit(RayL);
+                HitInfo closesHitToLight = tree.GetClosestHit(RayL, tree.Root);
                 if (closesHitToLight.hit && closesHitToLight.triangle != info.triangle &&
                     (light-closesHitToLight.hitPoint).magnitude<RayL.Vector.magnitude)
                 {
@@ -51,7 +51,7 @@ namespace RayProcessor.Lib
                 for (int j = 0; j < camera.screenPixelSize.width; j++)
                 {
                     Ray rayToFire = camera.GetPixelRay(j, i);
-                    HitInfo closestHit = treeQueries.GetClosestHit(rayToFire);
+                    HitInfo closestHit =tree.GetClosestHit(rayToFire, tree.Root);
                     camera.SetPixel(GetPixelByHitInfo(closestHit), j, i);
                 }
             }

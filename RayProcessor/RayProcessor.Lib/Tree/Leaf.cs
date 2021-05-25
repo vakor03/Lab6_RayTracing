@@ -6,12 +6,12 @@ namespace RayProcessor.Lib
     {
         public Triangle Triangle => _triangle;
 
-        private Branch _mother;
+        public readonly Branch mother;
         private Triangle _triangle;
 
         public Leaf(Branch mother, Triangle triangle)
         {
-            _mother = mother;
+            this.mother = mother;
             _triangle = triangle;
         }
 

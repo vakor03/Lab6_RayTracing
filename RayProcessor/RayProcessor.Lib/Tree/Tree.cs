@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 namespace RayProcessor.Lib
 {
     public class Tree
@@ -76,6 +78,46 @@ namespace RayProcessor.Lib
                 }
 
                 currentBranch.RefindVolume(triangle);
+            }
+        }
+
+        public HitInfo GetClosestHit(Ray ray, Node currentNode)
+        {
+            if (((Branch)currentNode).Childs[0] is Leaf)
+            {
+                HitInfo closesHit = new HitInfo();
+                foreach (Leaf child in ((Branch) currentNode).Childs)
+                {
+                    (bool intersected, Point intersection) = child.Triangle.CrossesTriangle(ray);
+                    if (intersected)
+                    {
+                        if (!closesHit.hit)
+                        {
+                            closesHit = new HitInfo(true, child.Triangle, intersection);
+                        }
+                        else if ((ray.StartPoint - intersection).magnitude >
+                                (ray.StartPoint - closesHit.hitPoint).magnitude)
+                        {
+                            closesHit = new HitInfo(true, child.Triangle, intersection);
+                        }
+                    }
+                }
+
+                return closesHit;
+            }
+            else
+            {
+                HitInfo hit1 = GetClosestHit(ray, ((Branch) currentNode).Childs[0]);
+                HitInfo hit2 = GetClosestHit(ray, ((Branch) currentNode).Childs[1]);
+                if ((ray.StartPoint - hit1.hitPoint).magnitude >
+                    (ray.StartPoint - hit2.hitPoint).magnitude)
+                {
+                    return hit2;
+                }
+                else
+                {
+                    return hit1;
+                }
             }
         }
     }

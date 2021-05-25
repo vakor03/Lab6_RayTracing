@@ -44,6 +44,7 @@ namespace RayProcessor.Lib
                     //faces.Add(new Triangle(verts[idArray[0]], verts[idArray[1]], verts[idArray[2]]));
                 }
             }
+            tree.AddTriangle(new Triangle(new Point(10, 10, -0.5), new Point(-10, 0, -0.5), new Point(0, -10, -0.5)));
 
 
            // return faces;
