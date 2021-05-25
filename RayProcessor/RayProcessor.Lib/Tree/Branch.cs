@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace RayProcessor.Lib
 {
     public class Branch:Node
     {
-        public MBB MBB
-        {
-            get => _mbb;
-        }
+        public MBB MBB => _mbb;
 
-        public List<Node> Childs
-        {
-            get => _childs;
-        }
+        public List<Node> Childs => _childs;
 
         private static int _maxChild = 10;
         private static int _minChild = 4;

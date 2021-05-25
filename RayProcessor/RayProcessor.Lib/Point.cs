@@ -21,7 +21,7 @@ namespace RayProcessor.Lib
 
         public Point Normalize()
         {
-            return new Point(this.x / this.magnitude, this.y / this.magnitude, this.z / this.magnitude);
+            return new(x / magnitude, y / magnitude, z / magnitude);
         }
 
         public static bool operator ==(Point vector1, Point vector2)

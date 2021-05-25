@@ -11,9 +11,9 @@ namespace RayProcessor.Lib
     {
         // colors of each pixel
         // (0, 0) - bottom left
-        public double[,] pixels { get; private set; }
-        private double pixelSize;
-        public (int width, int height) screenPixelSize;
+        private double[,] _pixels { get; set; }
+        private double _pixelSize;
+        private (int width, int height) _screenPixelSize;
 
         // a normal to the screen, facing the direction we are looking at
         private Point normal;
@@ -39,9 +39,9 @@ namespace RayProcessor.Lib
         
         public Screen(int width, int height, double pixelSize, Point camera, Point a, Point b, Point c)
         {
-            pixels = new double[height, width];
-            this.screenPixelSize = (width, height);
-            this.pixelSize = pixelSize;
+            _pixels = new double[height, width];
+            this._screenPixelSize = (width, height);
+            this._pixelSize = pixelSize;
             this.normal = (a-b).CrossProduct(c-b);
             this.screenCenter = camera + normal;
             screenCoordinates = new Point[4];
@@ -53,7 +53,7 @@ namespace RayProcessor.Lib
         
         public void SetPixel(double shade, int x, int y)
         {
-            pixels[y, x] = shade;
+            _pixels[y, x] = shade;
         }
 
         public Point GetPixelXYZPoint(int pixelX, int pixelY)
@@ -63,28 +63,28 @@ namespace RayProcessor.Lib
             // pixelX -= screenPixelSize.width / 2;
             // pixelY -= screenPixelSize.height / 2;
             Point vectorBC = screenCoordinates[2] - screenCoordinates[1];
-            Point shiftToRight = new Point(vectorBC.x * pixelX / screenPixelSize.width  + screenCoordinates[1].x,
-                vectorBC.y  * pixelX / screenPixelSize.width + screenCoordinates[1].y,
-                vectorBC.z  * pixelX / screenPixelSize.width + screenCoordinates[1].z);
+            Point shiftToRight = new Point(vectorBC.x * pixelX / _screenPixelSize.width  + screenCoordinates[1].x,
+                vectorBC.y  * pixelX / _screenPixelSize.width + screenCoordinates[1].y,
+                vectorBC.z  * pixelX / _screenPixelSize.width + screenCoordinates[1].z);
             
             Point vectorBA = screenCoordinates[0] - screenCoordinates[1];
-            Point shiftDown = new Point(vectorBA.x* pixelY / screenPixelSize.height  + shiftToRight.x,
-                vectorBA.y * pixelY/ screenPixelSize.height  + shiftToRight.y,
-                vectorBA.z * pixelY / screenPixelSize.height + shiftToRight.z);
+            Point shiftDown = new Point(vectorBA.x* pixelY / _screenPixelSize.height  + shiftToRight.x,
+                vectorBA.y * pixelY/ _screenPixelSize.height  + shiftToRight.y,
+                vectorBA.z * pixelY / _screenPixelSize.height + shiftToRight.z);
             return shiftDown;
         }
 
         public void OutputToConsole()
         {
-            for (int i = screenPixelSize.height - 1; i >= 0; i--)
+            for (int i = _screenPixelSize.height - 1; i >= 0; i--)
             {
-                for (int j = screenPixelSize.width - 1; j >= 0; j--)
+                for (int j = _screenPixelSize.width - 1; j >= 0; j--)
                 {
-                    if (i == screenPixelSize.height / 2 || j == screenPixelSize.width / 2)
+                    if (i == _screenPixelSize.height / 2 || j == _screenPixelSize.width / 2)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                     }
-                    Console.Write(pixels[i, j]);
+                    Console.Write(_pixels[i, j]);
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 Console.WriteLine();

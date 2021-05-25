@@ -5,9 +5,9 @@ namespace RayProcessor.Lib
     public class Triangle
     {
         public Point[] Points => new []{vertex1, vertex2, vertex3};
-        public Point vertex1;
-        public Point vertex2;
-        public Point vertex3;
+        private readonly Point vertex1;
+        private readonly Point vertex2;
+        private readonly Point vertex3;
         public Point Center { get; private set; }
         public Point Normal { get; private set; }
 
