@@ -7,9 +7,9 @@ namespace RayProcesssor.ConsoleApp
         
         static void Main()
         {
-            Point cameraPos = new(2, 0, 0);
-            Camera camera = new(1280, 720, .0005, cameraPos, new(0, 0, 90));
-            Point light = new(1, 2, 1);
+            Point cameraPos = new(0, 2, 0);
+            Camera camera = new(3840, 2160, .00015, cameraPos, new(0, 0, 0));
+            Point light = new(0.6, 1.6, 0.6);
             Tree tree = new Tree();
             FileManager fileManager = new FileManager();
             fileManager.ReadObj(@"cow.obj", tree);

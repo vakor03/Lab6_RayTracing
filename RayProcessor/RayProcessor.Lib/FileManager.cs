@@ -14,7 +14,6 @@ namespace RayProcessor.Lib
         public void ReadObj(string path, Tree tree)
         {
             List<Point> verts = new List<Point>();
-            List<Triangle> faces = new List<Triangle>();
             using StreamReader streamReader = new StreamReader(path);
             string inputStr;
             while ((inputStr = streamReader.ReadLine()) != null)
