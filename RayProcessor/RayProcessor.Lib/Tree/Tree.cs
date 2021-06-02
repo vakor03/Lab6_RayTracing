@@ -96,12 +96,12 @@ namespace RayProcessor.Lib
                     (bool intersected, Point intersection) = child.Triangle.CrossesTriangle(ray);
                     if (intersected)
                     {
-                        if (!closesHit.hit)
+                        if (!closesHit.Hit)
                         {
                             closesHit = new HitInfo(true, child.Triangle, intersection);
                         }
                         else if ((ray.StartPoint - intersection).magnitude <
-                                (ray.StartPoint - closesHit.hitPoint).magnitude)
+                                (ray.StartPoint - closesHit.HitPoint).magnitude)
                         {
                             closesHit = new HitInfo(true, child.Triangle, intersection);
                         }
@@ -114,22 +114,22 @@ namespace RayProcessor.Lib
             {
                 HitInfo hit1 = GetClosestHit(ray, ( currentNode).Childs[0] as Branch);
                 HitInfo hit2 = GetClosestHit(ray, ( currentNode).Childs[1] as Branch);
-                if (!hit1.hit && !hit2.hit)
+                if (!hit1.Hit && !hit2.Hit)
                 {
                     return new HitInfo();
                 }
 
-                if (!hit1.hit)
+                if (!hit1.Hit)
                 {
                     return hit2;
                 }
 
-                if (!hit2.hit)
+                if (!hit2.Hit)
                 {
                     return hit1;
                 }
-                if ((ray.StartPoint - hit1.hitPoint).magnitude >
-                    (ray.StartPoint - hit2.hitPoint).magnitude)
+                if ((ray.StartPoint - hit1.HitPoint).magnitude >
+                    (ray.StartPoint - hit2.HitPoint).magnitude)
                 {
                     return hit2;
                 }

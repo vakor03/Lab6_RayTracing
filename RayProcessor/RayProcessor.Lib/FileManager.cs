@@ -74,9 +74,9 @@ namespace RayProcessor.Lib
                 {
                     for (int j = 0; j < camera.screenPixelSize.width; j++)
                     {
-                        writer.Write((byte) (camera.pixels[i, j] * 255));
-                        writer.Write((byte) (camera.pixels[i, j] * 255));
-                        writer.Write((byte) (camera.pixels[i, j] * 255));
+                        writer.Write((byte) (camera.pixels[i, j].x * 255));
+                        writer.Write((byte) (camera.pixels[i, j].y * 255));
+                        writer.Write((byte) (camera.pixels[i, j].z * 255));
                     }
 
                     for (int j = 0; j < countOfZeroBits; j++)

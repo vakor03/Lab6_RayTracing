@@ -8,15 +8,15 @@ namespace RayProcessor.Lib
 {
     public struct HitInfo
     {
-        public bool hit;
-        public Triangle triangle;
-        public Point hitPoint;
+        public bool Hit;
+        public Triangle Triangle;
+        public Point HitPoint;
 
         public HitInfo(bool hit, Triangle triangle, Point point)
         {
-            this.hit = hit;
-            this.triangle = triangle;
-            this.hitPoint = point;
+            Hit = hit;
+            Triangle = triangle;
+            HitPoint = point;
         }
     }
 }

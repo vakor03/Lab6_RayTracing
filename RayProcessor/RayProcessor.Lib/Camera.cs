@@ -11,7 +11,8 @@ namespace RayProcessor.Lib
     {
         // colors of each pixel
         // (0, 0) - bottom left
-        public double[,] pixels { get; private set; }
+        // public double[,] pixels { get; private set; }
+        public Point[,] pixels;
         private double pixelSize;
         public (int width, int height) screenPixelSize;
 
@@ -33,7 +34,8 @@ namespace RayProcessor.Lib
 
         public Camera(int width, int height, double pixelSize, Point cameraPoint, Point xyzRotationDegrees)
         {
-            pixels = new double[height, width];
+            // pixels = new double[height, width];
+            pixels = new Point[height, width];
             screenPixelSize = (width, height);
             this.pixelSize = pixelSize;
             this.cameraPoint = cameraPoint;
@@ -53,9 +55,9 @@ namespace RayProcessor.Lib
         }
 
 
-        public void SetPixel(double shade, int x, int y)
+        public void SetPixel(Point color, int x, int y)
         {
-            pixels[y, x] = shade;
+            pixels[y, x] = color;
         }
 
         private Point GetPixelXYZPoint(int pixelX, int pixelY)
